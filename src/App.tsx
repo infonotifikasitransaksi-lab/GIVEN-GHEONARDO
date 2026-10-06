@@ -3612,36 +3612,36 @@ export default function App() {
                                   key={bank.key}
                                   onClick={() => setSelectedBankDetail(bank)}
                                   className={cn(
-                                    "p-2 rounded-xl border transition-all cursor-pointer group flex flex-col gap-1.5",
+                                    "p-2.5 rounded-xl border transition-all cursor-pointer group flex flex-col gap-2",
                                     isCurrentBank
                                       ? "bg-slate-900/90 border-cyan-500/50 shadow-xs"
                                       : "bg-slate-900/40 border-slate-800/80 hover:bg-slate-800/60 hover:border-slate-700"
                                   )}
                                   title={`Klik untuk detail & pratinjau identitas ${bank.fullName}`}
                                 >
-                                  <div className="flex items-center justify-between gap-1.5">
-                                    <div className="flex items-center gap-2 min-w-0">
-                                      {/* Bank Official Logo */}
-                                      <div className="w-12 h-5.5 bg-white/95 rounded px-1 flex items-center justify-center shrink-0 shadow-2xs">
+                                  <div className="flex items-center justify-between gap-2">
+                                    <div className="flex items-center gap-2.5 min-w-0 flex-1 overflow-hidden">
+                                      {/* Bank Official Logo with responsive sizing */}
+                                      <div className="w-14 h-7 bg-white/95 rounded-lg px-1.5 py-0.5 flex items-center justify-center shrink-0 shadow-2xs border border-white/10">
                                         <img
                                           src={bank.logoUrl}
                                           alt={bank.name}
-                                          className="max-h-4.5 max-w-full object-contain"
+                                          className="max-h-5 max-w-full object-contain"
                                           loading="lazy"
                                         />
                                       </div>
-                                      <div className="flex flex-col min-w-0">
-                                        <span className="text-[11px] font-bold text-slate-200 group-hover:text-cyan-300 transition-colors truncate">
+                                      <div className="flex flex-col min-w-0 flex-1 overflow-hidden">
+                                        <span className="text-[12px] font-bold text-slate-200 group-hover:text-cyan-300 transition-colors truncate leading-tight">
                                           {bank.name}
                                         </span>
-                                        <span className="text-[9px] text-slate-400 truncate">
+                                        <span className="text-[9.5px] text-slate-400 truncate leading-tight mt-0.5">
                                           {bank.fullName}
                                         </span>
                                       </div>
                                     </div>
 
                                     {isCurrentBank ? (
-                                      <span className="text-[8px] font-black uppercase tracking-wider text-emerald-400 bg-emerald-950/80 border border-emerald-800/80 px-1.5 py-0.5 rounded shrink-0">
+                                      <span className="text-[8.5px] font-black uppercase tracking-wider text-emerald-400 bg-emerald-950/80 border border-emerald-800/80 px-2 py-0.5 rounded-md shrink-0 ml-1">
                                         Aktif
                                       </span>
                                     ) : (
@@ -3651,7 +3651,7 @@ export default function App() {
                                           e.stopPropagation();
                                           handleApplyBankTemplate(bank.key);
                                         }}
-                                        className="text-[9px] font-bold text-slate-400 hover:text-cyan-300 hover:underline px-1 py-0.5 shrink-0 cursor-pointer"
+                                        className="text-[9.5px] font-bold text-cyan-400 hover:text-cyan-300 bg-cyan-950/60 hover:bg-cyan-900/60 border border-cyan-800/60 px-2 py-0.5 rounded-md shrink-0 ml-1 cursor-pointer transition-all active:scale-95"
                                         title={`Terapkan identitas Bank ${bank.name} ke draf`}
                                       >
                                         Terapkan
@@ -3660,16 +3660,16 @@ export default function App() {
                                   </div>
 
                                   {/* Color Accent Previews */}
-                                  <div className="flex items-center justify-between pt-1 border-t border-slate-800/60 text-[9px] font-mono">
-                                    <div className="flex items-center gap-1.5">
+                                  <div className="flex items-center justify-between pt-1.5 border-t border-slate-800/70 text-[9.5px] font-mono">
+                                    <div className="flex items-center gap-1.5 min-w-0">
                                       <span
                                         className="w-2.5 h-2.5 rounded-xs shrink-0 shadow-xs border border-white/20"
                                         style={{ backgroundColor: bank.primaryColor }}
                                         title={`Aksen Utama: ${bank.primaryColor}`}
                                       />
-                                      <span className="text-slate-400">{bank.primaryColor}</span>
+                                      <span className="text-slate-400 truncate">{bank.primaryColor}</span>
                                     </div>
-                                    <div className="flex items-center gap-1 text-[8.5px] text-slate-400">
+                                    <div className="flex items-center gap-1 text-[9px] text-slate-400 shrink-0">
                                       <span
                                         className="w-2 h-2 rounded-full shrink-0"
                                         style={{ backgroundColor: bank.buttonColor }}
@@ -5479,91 +5479,96 @@ export default function App() {
 
                                 {parsed.html && (
                                   <motion.div
-                                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="w-full flex flex-col gap-3 my-2 p-3 sm:p-4 bg-slate-50/80 rounded-2xl border-2 border-slate-200/90 shadow-sm"
+                                    initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                                    className="w-full flex flex-col gap-3.5 my-2.5 p-3.5 sm:p-5 bg-gradient-to-b from-white/95 via-slate-50/95 to-slate-100/70 rounded-3xl sm:rounded-[28px] border border-slate-200/90 shadow-[0_12px_36px_-6px_rgba(15,23,42,0.12),0_4px_16px_-2px_rgba(15,23,42,0.06)] hover:shadow-[0_18px_45px_-8px_rgba(15,23,42,0.15),0_6px_20px_-3px_rgba(15,23,42,0.08)] ring-1 ring-slate-900/[0.04] transition-all duration-300 relative overflow-hidden backdrop-blur-md"
                                   >
-                                    {/* Draft Header Banner with clear visual badge, view toggle, and prominent Copy HTML button */}
-                                    <div className="flex flex-wrap items-center justify-between gap-2.5 pb-2 border-b border-slate-200/70">
-                                      <div className="flex items-center gap-2">
-                                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold uppercase tracking-wider bg-mandiri-blue-50 text-mandiri-blue-700 border border-mandiri-blue-200/80 shadow-2xs">
-                                          <Sparkles className="w-3.5 h-3.5 text-mandiri-blue-600" />
+                                    {/* Top ambient color glow strip */}
+                                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-mandiri-blue-600 via-indigo-500 to-amber-500 opacity-90" />
+
+                                    {/* Draft Header Banner with subtle badges, view toggle, and compact Copy HTML button */}
+                                    <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5 pb-2 border-b border-slate-200/75">
+                                      <div className="flex items-center gap-1.5 flex-wrap">
+                                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-mandiri-blue-50 to-indigo-50 text-mandiri-blue-700 border border-mandiri-blue-200/80 shadow-2xs">
+                                          <Sparkles className="w-3 h-3 text-mandiri-blue-600 animate-pulse" />
                                           <span>Draf Email HTML</span>
                                         </span>
-                                        <span className="text-[11px] text-slate-500 hidden sm:inline font-medium">
-                                          Dihasilkan oleh AI
+                                        <span className="text-[10px] text-slate-500 hidden sm:inline-flex items-center gap-1 font-medium bg-slate-100/80 px-2 py-0.5 rounded-full border border-slate-200/60">
+                                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                          <span>Siap Kirim</span>
                                         </span>
                                       </div>
 
                                       <div className="flex items-center gap-1.5 ml-auto">
-                                        {/* View Mode Toggle: Preview vs Raw HTML */}
-                                        <div className="inline-flex p-0.5 bg-slate-200/70 rounded-lg text-xs">
+                                        {/* View Mode Toggle: Preview vs Raw HTML with small pill container */}
+                                        <div className="inline-flex p-0.5 bg-slate-200/70 rounded-lg text-xs ring-1 ring-slate-300/40 shadow-inner">
                                           <button
                                             type="button"
                                             onClick={() => setChatViewMode(prev => ({ ...prev, [index]: "preview" }))}
                                             className={cn(
-                                              "px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all flex items-center gap-1 cursor-pointer",
+                                              "px-2.5 py-0.5 rounded-md text-[10.5px] font-semibold transition-all flex items-center gap-1 cursor-pointer",
                                               (chatViewMode[index] || "preview") === "preview"
-                                                ? "bg-white text-slate-800 shadow-xs"
+                                                ? "bg-white text-slate-900 shadow-xs ring-1 ring-black/5"
                                                 : "text-slate-600 hover:text-slate-900"
                                             )}
-                                            title="Pratinjau tampilan visual draf email"
+                                            title="Pratinjau visual draf email"
                                           >
-                                            <Eye className="w-3.5 h-3.5" />
+                                            <Eye className="w-3 h-3 text-mandiri-blue-600" />
                                             <span>Pratinjau</span>
                                           </button>
                                           <button
                                             type="button"
                                             onClick={() => setChatViewMode(prev => ({ ...prev, [index]: "code" }))}
                                             className={cn(
-                                              "px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all flex items-center gap-1 cursor-pointer",
+                                              "px-2.5 py-0.5 rounded-md text-[10.5px] font-semibold transition-all flex items-center gap-1 cursor-pointer",
                                               chatViewMode[index] === "code"
-                                                ? "bg-white text-slate-800 shadow-xs"
+                                                ? "bg-white text-slate-900 shadow-xs ring-1 ring-black/5"
                                                 : "text-slate-600 hover:text-slate-900"
                                             )}
                                             title="Lihat kode HTML draf email"
                                           >
-                                            <Code className="w-3.5 h-3.5" />
+                                            <Code className="w-3 h-3 text-indigo-600" />
                                             <span>Kode HTML</span>
                                           </button>
                                         </div>
 
-                                        {/* Dedicated prominent Copy to Clipboard button */}
+                                        {/* Dedicated Compact Copy HTML button */}
                                         <button
                                           type="button"
                                           onClick={() => handleCopyHtmlDraft(parsed.html, index)}
                                           className={cn(
-                                            "px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all flex items-center gap-1.5 shadow-xs cursor-pointer active:scale-95",
+                                            "px-2.5 py-1 rounded-lg text-[10.5px] font-semibold transition-all flex items-center gap-1 cursor-pointer active:scale-95",
                                             copiedHtmlIndex === index
-                                              ? "bg-emerald-600 text-white shadow-emerald-600/30"
-                                              : "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 hover:border-slate-300"
+                                              ? "bg-emerald-600 text-white shadow-xs shadow-emerald-600/30"
+                                              : "bg-white hover:bg-slate-50 text-slate-700 border border-slate-200/90 hover:border-slate-300 shadow-2xs hover:shadow-xs"
                                           )}
                                           title="Salin kode HTML lengkap ke clipboard"
                                         >
                                           {copiedHtmlIndex === index ? (
                                             <>
-                                              <Check className="w-3.5 h-3.5 text-white" />
+                                              <Check className="w-3 h-3 text-white" />
                                               <span>Tersalin!</span>
                                             </>
                                           ) : (
                                             <>
-                                              <Copy className="w-3.5 h-3.5 text-slate-600" />
-                                              <span>Salin Kode HTML</span>
+                                              <Copy className="w-3 h-3 text-slate-600" />
+                                              <span>Salin HTML</span>
                                             </>
                                           )}
                                         </button>
                                       </div>
                                     </div>
 
-                                    {/* Subject Bar */}
+                                    {/* Subject Bar with soft curved container */}
                                     {parsed.subject && (
-                                      <div className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 flex items-center justify-between gap-3 shadow-2xs">
+                                      <div className="px-3.5 py-2 rounded-xl bg-white/95 border border-slate-200/90 flex items-center justify-between gap-2.5 shadow-2xs ring-1 ring-slate-900/[0.02]">
                                         <div className="flex items-center gap-2 min-w-0 flex-1">
-                                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider shrink-0">
-                                            Subjek:
+                                          <span className="text-[9px] font-extrabold text-mandiri-blue-700 bg-mandiri-blue-50 px-1.5 py-0.5 rounded border border-mandiri-blue-200/60 uppercase tracking-wider shrink-0 flex items-center gap-1">
+                                            <Mail className="w-2.5 h-2.5" />
+                                            <span>Subjek:</span>
                                           </span>
-                                          <span className="text-xs font-bold text-slate-900 break-words [overflow-wrap:anywhere] select-all leading-snug">
+                                          <span className="text-[11.5px] font-bold text-slate-900 break-words [overflow-wrap:anywhere] select-all leading-snug">
                                             {parsed.subject}
                                           </span>
                                         </div>
@@ -5574,50 +5579,96 @@ export default function App() {
                                             addLog("info", `Subjek disalin: "${parsed.subject}"`);
                                           }}
                                           title="Salin subjek"
-                                          className="p-1 text-slate-400 hover:text-slate-600 rounded transition-colors cursor-pointer shrink-0"
+                                          className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-all cursor-pointer shrink-0 active:scale-95"
                                         >
-                                          <Copy className="w-3.5 h-3.5" />
+                                          <Copy className="w-3 h-3" />
                                         </button>
                                       </div>
                                     )}
 
-                                    {/* Content Display: Preview Iframe or Raw Code View */}
-                                    {(chatViewMode[index] || "preview") === "preview" ? (
-                                      <div className="w-full h-[400px] xs:h-[460px] sm:h-[520px] shrink-0 bg-white rounded-xl border border-slate-200/90 shadow-xs overflow-hidden ring-1 ring-slate-100">
-                                        <iframe
-                                          title={`Receipt Preview ${index}`}
-                                          srcDoc={formatHTMLForPreview(parsed.html)}
-                                          className="w-full h-full border-0 bg-white"
-                                          sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
-                                        />
-                                      </div>
-                                    ) : (
-                                      <div className="relative w-full h-[400px] xs:h-[460px] sm:h-[520px] shrink-0 bg-[#0f172a] rounded-xl border border-slate-800 shadow-inner overflow-hidden flex flex-col font-mono text-xs">
-                                        <div className="flex items-center justify-between px-3 py-2 bg-slate-900 border-b border-slate-800 text-slate-400 text-[11px]">
-                                          <span>HTML Source Code ({forceInlineStylesToHtml(parsed.html).length.toLocaleString()} karakter)</span>
-                                          <button
-                                            type="button"
-                                            onClick={() => handleCopyHtmlDraft(parsed.html, index)}
-                                            className="text-xs text-sky-400 hover:text-sky-300 flex items-center gap-1 font-semibold cursor-pointer"
-                                          >
-                                            {copiedHtmlIndex === index ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                                            <span>{copiedHtmlIndex === index ? "Tersalin!" : "Salin Kode"}</span>
-                                          </button>
-                                        </div>
-                                        <pre className="flex-1 p-3.5 overflow-auto text-emerald-300 leading-relaxed whitespace-pre font-mono text-[11.5px] select-all">
-                                          <code>{forceInlineStylesToHtml(parsed.html)}</code>
-                                        </pre>
-                                      </div>
-                                    )}
+                                    {/* Content Display: Animated Preview Iframe or Distinctive Dark IDE Raw Code View with gentle scale-in */}
+                                    <AnimatePresence mode="wait">
+                                      {(chatViewMode[index] || "preview") === "preview" ? (
+                                        <motion.div
+                                          key="preview-mode-container"
+                                          initial={{ opacity: 0, scale: 0.975 }}
+                                          animate={{ opacity: 1, scale: 1 }}
+                                          exit={{ opacity: 0, scale: 0.975 }}
+                                          transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                                          className="w-full h-[400px] xs:h-[460px] sm:h-[520px] shrink-0 bg-white rounded-2xl border border-slate-200/90 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.08)] overflow-hidden ring-1 ring-slate-900/5 relative"
+                                        >
+                                          <iframe
+                                            title={`Receipt Preview ${index}`}
+                                            srcDoc={formatHTMLForPreview(parsed.html)}
+                                            className="w-full h-full border-0 bg-white"
+                                            sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
+                                          />
+                                        </motion.div>
+                                      ) : (
+                                        <motion.div
+                                          key="code-mode-container"
+                                          initial={{ opacity: 0, scale: 0.97, y: 4 }}
+                                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                                          exit={{ opacity: 0, scale: 0.97, y: 4 }}
+                                          transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
+                                          className="relative w-full h-[400px] xs:h-[460px] sm:h-[520px] shrink-0 bg-[#090d16] rounded-2xl sm:rounded-3xl border border-slate-800 shadow-[0_16px_40px_-8px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.08)] overflow-hidden flex flex-col font-mono text-xs"
+                                        >
+                                          {/* IDE Toolbar Header with Mac Window Controls */}
+                                          <div className="flex items-center justify-between px-3.5 py-2 bg-gradient-to-r from-[#0d1322] via-[#0f172a] to-[#0d1322] border-b border-slate-800/90 text-slate-400 text-[11px] select-none">
+                                            <div className="flex items-center gap-2.5">
+                                              {/* Window control dots */}
+                                              <div className="flex items-center gap-1.5">
+                                                <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] opacity-90 ring-1 ring-[#e0443e]/50 inline-block shadow-xs" />
+                                                <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] opacity-90 ring-1 ring-[#dea123]/50 inline-block shadow-xs" />
+                                                <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f] opacity-90 ring-1 ring-[#1aab29]/50 inline-block shadow-xs" />
+                                              </div>
+                                              {/* File badge */}
+                                              <div className="flex items-center gap-1 px-2 py-0.5 rounded bg-slate-800/80 border border-slate-700/60 text-slate-300 font-medium text-[10.5px]">
+                                                <Code className="w-3 h-3 text-sky-400" />
+                                                <span>email_template.html</span>
+                                              </div>
+                                            </div>
 
-                                    {/* Primary Action Buttons Bar */}
-                                    <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                                            <div className="flex items-center gap-2">
+                                              <span className="hidden sm:inline text-[10px] text-slate-500 font-mono">
+                                                {forceInlineStylesToHtml(parsed.html).length.toLocaleString()} karakter
+                                              </span>
+                                              <button
+                                                type="button"
+                                                onClick={() => handleCopyHtmlDraft(parsed.html, index)}
+                                                className="px-2 py-0.5 rounded-md bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 border border-sky-500/30 text-[10.5px] flex items-center gap-1 font-semibold cursor-pointer transition-all active:scale-95"
+                                              >
+                                                {copiedHtmlIndex === index ? (
+                                                  <>
+                                                    <Check className="w-3 h-3 text-emerald-400" />
+                                                    <span className="text-emerald-400">Tersalin!</span>
+                                                  </>
+                                                ) : (
+                                                  <>
+                                                    <Copy className="w-3 h-3 text-sky-400" />
+                                                    <span>Salin Kode</span>
+                                                  </>
+                                                )}
+                                              </button>
+                                            </div>
+                                          </div>
+
+                                          {/* Code Content Stream */}
+                                          <pre className="flex-1 p-4 overflow-auto text-emerald-300/95 leading-relaxed whitespace-pre font-mono text-[11.5px] sm:text-[12px] select-all custom-code-scrollbar bg-[#090d16]">
+                                            <code>{forceInlineStylesToHtml(parsed.html)}</code>
+                                          </pre>
+                                        </motion.div>
+                                      )}
+                                    </AnimatePresence>
+
+                                    {/* Primary Action Buttons Bar - Compact, clean, and proportional */}
+                                    <div className="flex flex-col sm:flex-row gap-2 pt-0.5">
                                       <button
                                         type="button"
                                         onClick={() => handleUseInSend(parsed.html, parsed.subject)}
-                                        className="flex-1 py-2.5 px-4 min-h-[42px] bg-gradient-to-r from-mandiri-blue-600 to-mandiri-blue-700 hover:from-mandiri-blue-500 hover:to-mandiri-blue-600 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-mandiri-blue-600/20 cursor-pointer flex items-center justify-center gap-2 active:scale-98"
+                                        className="flex-1 py-2 px-3 min-h-[34px] bg-gradient-to-r from-mandiri-blue-600 via-blue-600 to-indigo-700 hover:from-mandiri-blue-500 hover:to-indigo-600 text-white rounded-xl text-[11px] font-semibold transition-all shadow-xs hover:shadow-sm active:scale-[0.99] cursor-pointer flex items-center justify-center gap-1.5"
                                       >
-                                        <Send className="w-4 h-4 shrink-0" />
+                                        <Send className="w-3.5 h-3.5 shrink-0" />
                                         <span>Gunakan Draf di Pengirim Email</span>
                                       </button>
 
@@ -5626,9 +5677,9 @@ export default function App() {
                                           type="button"
                                           onClick={() => handleRandomizeMessageRef(index)}
                                           title="Perbarui No. Referensi & Tanggal/Waktu transaksi mengikuti waktu sekarang"
-                                          className="py-2.5 px-3 min-h-[42px] bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-xs active:scale-95"
+                                          className="py-1.5 px-2.5 min-h-[34px] bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-[10.5px] font-medium transition-all cursor-pointer flex items-center justify-center gap-1 shadow-2xs hover:shadow-xs active:scale-95"
                                         >
-                                          <RefreshCw className="w-3.5 h-3.5 text-mandiri-blue-600 shrink-0" />
+                                          <RefreshCw className="w-3 h-3 text-mandiri-blue-600 shrink-0" />
                                           <span className="truncate">Acak Ref</span>
                                         </button>
 
@@ -5637,20 +5688,20 @@ export default function App() {
                                           onClick={() => handleCopyHtmlDraft(parsed.html, index)}
                                           title="Salin kode HTML lengkap ke clipboard"
                                           className={cn(
-                                            "py-2.5 px-3 min-h-[42px] border rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-xs active:scale-95",
+                                            "py-1.5 px-2.5 min-h-[34px] border rounded-xl text-[10.5px] font-medium transition-all cursor-pointer flex items-center justify-center gap-1 shadow-2xs active:scale-95",
                                             copiedHtmlIndex === index
                                               ? "bg-emerald-50 border-emerald-300 text-emerald-700"
-                                              : "bg-white hover:bg-slate-50 border-slate-200 text-slate-700"
+                                              : "bg-white hover:bg-slate-50 border-slate-200 text-slate-700 hover:shadow-2xs"
                                           )}
                                         >
                                           {copiedHtmlIndex === index ? (
                                             <>
-                                              <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                                              <span className="truncate font-bold">Tersalin</span>
+                                              <Check className="w-3 h-3 text-emerald-600 shrink-0" />
+                                              <span className="truncate font-semibold text-emerald-700">Tersalin</span>
                                             </>
                                           ) : (
                                             <>
-                                              <Copy className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                                              <Copy className="w-3 h-3 text-slate-500 shrink-0" />
                                               <span className="truncate">Salin HTML</span>
                                             </>
                                           )}
@@ -5660,9 +5711,9 @@ export default function App() {
                                           type="button"
                                           onClick={() => handleSaveAIAsTemplate(parsed.html, parsed.subject)}
                                           title="Simpan sebagai template"
-                                          className="py-2.5 px-3 min-h-[42px] bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-xs active:scale-95"
+                                          className="py-1.5 px-2.5 min-h-[34px] bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-[10.5px] font-medium transition-all cursor-pointer flex items-center justify-center gap-1 shadow-2xs hover:shadow-xs active:scale-95"
                                         >
-                                          <Bookmark className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
+                                          <Bookmark className="w-3 h-3 text-indigo-600 shrink-0" />
                                           <span className="truncate">Simpan</span>
                                         </button>
                                       </div>
@@ -5704,12 +5755,17 @@ export default function App() {
                               animate={{ opacity: 1, y: 0, scale: 1 }}
                               exit={{ opacity: 0, y: 12, scale: 0.95 }}
                               transition={{ duration: 0.2 }}
-                              className="absolute bottom-full mb-3 left-0 right-0 bg-white/95 backdrop-blur-xl rounded-3xl p-4 border border-white/80 shadow-[0_12px_40px_rgba(20,50,100,0.16)] space-y-3 z-50"
+                              className="absolute bottom-full mb-3 left-0 right-0 bg-white/95 backdrop-blur-xl rounded-3xl p-3.5 sm:p-4 border border-white/80 shadow-[0_12px_40px_rgba(20,50,100,0.16)] space-y-3 z-50 max-h-[75vh] overflow-y-auto no-scrollbar"
                             >
-                              <div className="text-xs font-semibold text-slate-700 px-1">
-                                Template Bank Resmi:
+                              <div className="flex items-center justify-between px-1">
+                                <span className="text-xs font-bold text-slate-800">
+                                  Template Bank Resmi:
+                                </span>
+                                <span className="text-[10px] text-slate-400 font-medium">
+                                  Pilih untuk buat draf otomatis
+                                </span>
                               </div>
-                              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-2">
                                 {[
                                   { key: "bca", label: "Bank BCA", sub: "Bank Central Asia", prompt: "Buatkan draf email notifikasi transaksi Kartu kredit Berhasil Bank BCA untuk pembelian di merchant Shopee sebesar Rp 5.000.000 beserta tombol BATALKAN TRANSAKSI dengan tata letak tampilan modern dan rapi.", logo: OFFICIAL_BANK_CONFIGS.bca.logoUrl, color: OFFICIAL_BANK_CONFIGS.bca.primaryColor },
                                   { key: "mandiri", label: "Bank Mandiri", sub: "Livin' by Mandiri", prompt: "Buatkan draf email notifikasi transaksi Kartu kredit Berhasil Bank Mandiri untuk pembelian di merchant Shopee sebesar Rp 5.000.000 beserta tombol BATALKAN TRANSAKSI dengan tata letak tampilan modern dan rapi.", logo: OFFICIAL_BANK_CONFIGS.mandiri.logoUrl, color: OFFICIAL_BANK_CONFIGS.mandiri.primaryColor },
@@ -5721,31 +5777,39 @@ export default function App() {
                                   <motion.button
                                     key={idx}
                                     type="button"
-                                    whileHover={{ scale: 1.03 }}
-                                    whileTap={{ scale: 0.96 }}
+                                    whileHover={{ scale: 1.01 }}
+                                    whileTap={{ scale: 0.97 }}
                                     onClick={() => {
                                       setShowPlusMenu(false);
                                       handleSendChatMessage(undefined, item.prompt);
                                     }}
-                                    className="p-3 rounded-2xl border border-slate-200/90 bg-white hover:bg-slate-50 transition-all shadow-xs flex items-center justify-between gap-2 cursor-pointer group overflow-hidden"
+                                    className="p-2 sm:p-2.5 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 transition-all shadow-2xs hover:shadow-xs flex items-center justify-between gap-2 cursor-pointer group overflow-hidden text-left"
                                     title={`Gunakan Template ${item.label}`}
                                   >
-                                    {/* Official Bank Logo */}
-                                    <div className="h-7 w-24 bg-white rounded-lg px-1 flex items-center justify-center shrink-0">
+                                    {/* Official Bank Logo with clean compact dimensions */}
+                                    <div className="h-7 w-12 sm:w-14 bg-white border border-slate-100 rounded-lg px-1 py-0.5 flex items-center justify-center shrink-0 shadow-2xs">
                                       <img
                                         src={item.logo}
                                         alt={item.label}
-                                        className="max-h-5.5 max-w-full object-contain"
+                                        className="max-h-4 max-w-full object-contain"
                                         loading="lazy"
                                       />
                                     </div>
-                                    {/* Accent color dot with hex */}
-                                    <div className="flex items-center gap-1 shrink-0">
-                                      <span
-                                        className="w-2.5 h-2.5 rounded-full border border-white shadow-xs shrink-0"
-                                        style={{ backgroundColor: item.color }}
-                                        title={`Aksen: ${item.color}`}
-                                      />
+                                    {/* Text Info */}
+                                    <div className="flex flex-col items-start min-w-0 flex-1 overflow-hidden">
+                                      <div className="flex items-center gap-1 w-full">
+                                        <span className="text-[11px] sm:text-[11.5px] font-bold text-slate-800 truncate group-hover:text-mandiri-blue-700 leading-tight">
+                                          {item.label}
+                                        </span>
+                                        <span
+                                          className="w-1.5 h-1.5 rounded-full border border-white shadow-2xs shrink-0 ml-auto"
+                                          style={{ backgroundColor: item.color }}
+                                          title={`Aksen: ${item.color}`}
+                                        />
+                                      </div>
+                                      <span className="text-[9px] text-slate-400 font-medium truncate w-full leading-tight mt-0.5">
+                                        {item.sub}
+                                      </span>
                                     </div>
                                   </motion.button>
                                 ))}
@@ -6494,7 +6558,7 @@ export default function App() {
               {/* Smart Bank Template Detail & Preview Modal */}
               {selectedBankDetail && (
                 <div
-                  className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs"
+                  className="fixed inset-0 z-[120] flex items-center justify-center p-3.5 sm:p-4 bg-slate-900/60 backdrop-blur-xs"
                   onClick={() => setSelectedBankDetail(null)}
                 >
                   <motion.div
@@ -6503,21 +6567,21 @@ export default function App() {
                     exit={{ opacity: 0, scale: 0.95, y: 10 }}
                     transition={{ duration: 0.18 }}
                     onClick={(e) => e.stopPropagation()}
-                    className="bg-white w-full max-w-sm rounded-[28px] shadow-2xl overflow-hidden border border-slate-100 relative"
+                    className="bg-white w-full max-w-sm max-h-[90vh] overflow-y-auto rounded-[28px] shadow-2xl border border-slate-100 relative no-scrollbar"
                   >
                     {/* Top colored accent stripe */}
-                    <div className="w-full h-2" style={{ backgroundColor: selectedBankDetail.primaryColor }} />
-                    <div className="p-5 space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-cyan-700 border border-slate-200">
+                    <div className="w-full h-2 sticky top-0 z-10" style={{ backgroundColor: selectedBankDetail.primaryColor }} />
+                    <div className="p-4 sm:p-5 space-y-3.5 sm:space-y-4">
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <div className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-cyan-700 border border-slate-200 shrink-0">
                             <Landmark className="w-4 h-4" />
                           </div>
-                          <div>
-                            <h3 className="text-xs font-black text-slate-900 uppercase tracking-tight">
+                          <div className="min-w-0">
+                            <h3 className="text-xs font-black text-slate-900 uppercase tracking-tight truncate">
                               Smart Bank Template
                             </h3>
-                            <p className="text-[10px] text-slate-500 font-semibold">
+                            <p className="text-[10px] text-slate-500 font-semibold truncate">
                               Identitas Resmi & Aksen Otomatis
                             </p>
                           </div>
@@ -6525,26 +6589,26 @@ export default function App() {
                         <button
                           type="button"
                           onClick={() => setSelectedBankDetail(null)}
-                          className="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center cursor-pointer text-xs font-bold transition-colors"
+                          className="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center cursor-pointer text-xs font-bold transition-colors shrink-0"
                         >
                           ✕
                         </button>
                       </div>
 
                       {/* Bank Logo Showcase */}
-                      <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col items-center justify-center gap-2">
-                        <div className="h-11 px-4 bg-white rounded-xl shadow-xs border border-slate-200/80 flex items-center justify-center">
+                      <div className="p-3.5 sm:p-4 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col items-center justify-center gap-2">
+                        <div className="h-12 max-w-full px-4 bg-white rounded-xl shadow-xs border border-slate-200/80 flex items-center justify-center">
                           <img
                             src={selectedBankDetail.logoUrl}
                             alt={selectedBankDetail.name}
                             className="max-h-7 max-w-full object-contain"
                           />
                         </div>
-                        <div className="text-center">
+                        <div className="text-center px-1">
                           <span className="text-xs font-black text-slate-800 block">
                             Bank {selectedBankDetail.name}
                           </span>
-                          <span className="text-[10px] text-slate-500 font-medium">
+                          <span className="text-[10.5px] text-slate-500 font-medium break-words">
                             {selectedBankDetail.fullName}
                           </span>
                         </div>
@@ -6552,34 +6616,34 @@ export default function App() {
 
                       {/* Visual Color Palette */}
                       <div className="space-y-2">
-                        <span className="text-[10px] font-black text-slate-700 uppercase tracking-wider block">
+                        <span className="text-[10px] font-black text-slate-700 uppercase tracking-wider block px-0.5">
                           Palet Warna Aksen:
                         </span>
                         <div className="grid grid-cols-2 gap-2">
                           <div className="p-2.5 rounded-xl border border-slate-100 bg-slate-50/70 space-y-1">
-                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wide block">
+                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wide block truncate">
                               Warna Utama
                             </span>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 min-w-0">
                               <span
                                 className="w-5 h-5 rounded-lg shadow-xs border border-slate-200 shrink-0"
                                 style={{ backgroundColor: selectedBankDetail.primaryColor }}
                               />
-                              <span className="text-[11px] font-mono font-bold text-slate-800">
+                              <span className="text-[11px] font-mono font-bold text-slate-800 truncate">
                                 {selectedBankDetail.primaryColor}
                               </span>
                             </div>
                           </div>
                           <div className="p-2.5 rounded-xl border border-slate-100 bg-slate-50/70 space-y-1">
-                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wide block">
+                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wide block truncate">
                               Warna Tombol
                             </span>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 min-w-0">
                               <span
                                 className="w-5 h-5 rounded-lg shadow-xs border border-slate-200 shrink-0"
                                 style={{ backgroundColor: selectedBankDetail.buttonColor }}
                               />
-                              <span className="text-[11px] font-mono font-bold text-slate-800">
+                              <span className="text-[11px] font-mono font-bold text-slate-800 truncate">
                                 {selectedBankDetail.buttonColor}
                               </span>
                             </div>
@@ -6592,25 +6656,25 @@ export default function App() {
                         <Sparkles className="w-4 h-4 text-cyan-600 shrink-0 mt-0.5" />
                         <div className="text-[11px] leading-snug">
                           <p className="font-bold text-cyan-900">Pembersihan Cache Otomatis Aktif</p>
-                          <p className="text-cyan-700 text-[10px] mt-0.5">
+                          <p className="text-cyan-700 text-[10px] mt-0.5 leading-relaxed">
                             Menghapus sisa logo bank lain, mengganti seluruh warna aksen ({selectedBankDetail.primaryColor}), dan menghasilkan nomor referensi baru agar draf 100% segar.
                           </p>
                         </div>
                       </div>
 
                       {/* Action Buttons */}
-                      <div className="space-y-2 pt-1">
+                      <div className="space-y-1.5 pt-1">
                         <button
                           type="button"
                           onClick={() => {
                             handleApplyBankTemplate(selectedBankDetail.key);
                             setSelectedBankDetail(null);
                           }}
-                          className="w-full py-2.5 text-white text-xs font-black rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                          className="w-full py-2 px-3 text-white text-[11.5px] font-bold rounded-xl transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer active:scale-98 text-center"
                           style={{ backgroundColor: selectedBankDetail.buttonColor || selectedBankDetail.primaryColor }}
                         >
-                          <Check className="w-3.5 h-3.5" />
-                          <span>Terapkan Segar (Bersihkan Cache Sisa)</span>
+                          <Check className="w-3.5 h-3.5 shrink-0" />
+                          <span className="truncate">Terapkan Segar (Bersihkan Cache Sisa)</span>
                         </button>
                         <button
                           type="button"
@@ -6618,10 +6682,10 @@ export default function App() {
                             handleApplyBankTemplate(selectedBankDetail.key, true);
                             setSelectedBankDetail(null);
                           }}
-                          className="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-colors cursor-pointer flex items-center justify-center gap-2"
+                          className="w-full py-1.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-semibold rounded-xl transition-colors cursor-pointer flex items-center justify-center gap-1.5 text-center"
                         >
-                          <RotateCcw className="w-3.5 h-3.5 text-cyan-600" />
-                          <span>Reset & Buat Draf Baru Bank {selectedBankDetail.name}</span>
+                          <RotateCcw className="w-3 h-3 text-cyan-600 shrink-0" />
+                          <span className="truncate">Reset & Buat Draf Baru Bank {selectedBankDetail.name}</span>
                         </button>
                         <button
                           type="button"
@@ -6630,10 +6694,10 @@ export default function App() {
                             setSelectedBankDetail(null);
                             handleSendChatMessage(undefined, `Rancang draf email resmi Bank ${selectedBankDetail.name} dengan tampilan responsif modern`);
                           }}
-                          className="w-full py-2 bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-medium rounded-xl transition-colors cursor-pointer flex items-center justify-center gap-2 border border-slate-200"
+                          className="w-full py-1.5 px-3 bg-slate-50 hover:bg-slate-100 text-slate-600 text-[11px] font-medium rounded-xl transition-colors cursor-pointer flex items-center justify-center gap-1.5 border border-slate-200 text-center"
                         >
-                          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                          <span>Rancang di Claude Mythos</span>
+                          <Sparkles className="w-3 h-3 text-amber-500 shrink-0" />
+                          <span className="truncate">Buat Draf Email Bank {selectedBankDetail.name} via AI</span>
                         </button>
                       </div>
                     </div>

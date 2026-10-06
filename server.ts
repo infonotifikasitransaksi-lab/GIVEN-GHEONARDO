@@ -47,7 +47,11 @@ function getGeminiClient() {
 }
 
 function getAnthropicApiKey(): string | null {
-  return process.env.ANTHROPIC_API_KEY || null;
+  const key = process.env.ANTHROPIC_API_KEY?.trim();
+  if (!key || key.length < 20 || key.includes("dummy") || key.includes("placeholder") || key === "your_anthropic_api_key_here") {
+    return null;
+  }
+  return key;
 }
 
 function getCloudflareTokens(): string[] {
@@ -231,7 +235,11 @@ async function generateClaudeContentWithFallback(params: {
 }
 
 function getOpenAIApiKey(): string | null {
-  return process.env.OPENAI_API_KEY || null;
+  const key = process.env.OPENAI_API_KEY?.trim();
+  if (!key || key.length < 20 || key.includes("dummy") || key.includes("placeholder") || key === "your_openai_api_key_here") {
+    return null;
+  }
+  return key;
 }
 
 // OpenAI fallback generator
@@ -306,7 +314,11 @@ async function generateOpenAIContentWithFallback(params: {
 }
 
 function getGroqApiKey(): string | null {
-  return process.env.GROQ_API_KEY || null;
+  const key = process.env.GROQ_API_KEY?.trim();
+  if (!key || key.length < 15 || key.includes("dummy") || key.includes("placeholder") || key === "your_groq_api_key_here") {
+    return null;
+  }
+  return key;
 }
 
 // Groq ultra-fast LPU inference generator
@@ -2047,73 +2059,7 @@ Baris 2+: Kalimat pengantar singkat, lalu blok kode HTML lengkap dalam markdown 
         preferredGeminiModel = "gemini-3.8-flash";
       }
 
-      // 1. If user explicitly requested Claude and Anthropic API key is available, run Claude first
-      const isClaudeRequested = requestedModel.toLowerCase().includes("claude");
-      if (isClaudeRequested && claudeKey) {
-        try {
-          const claudeResponse = await generateClaudeContentWithFallback({
-            messages: claudeMessages,
-            systemInstruction,
-            maxTokens: 4096,
-          });
-          text = claudeResponse.text || "";
-          actualModelUsed = claudeResponse.usedModel || requestedModel;
-        } catch (err: any) {
-          console.warn("Claude generation failed, falling back to other providers:", err.message);
-        }
-      }
-
-      // 1b. If user requested Groq LPU directly
-      const isGroqRequested = requestedModel.toLowerCase().includes("groq");
-      const groqKey = getGroqApiKey();
-      if (!text && isGroqRequested && groqKey) {
-        try {
-          const groqResponse = await generateGroqContentWithFallback({
-            messages: claudeMessages,
-            systemInstruction,
-            maxTokens: 4096,
-          });
-          text = groqResponse.text || "";
-          actualModelUsed = groqResponse.usedModel || "Groq LPU";
-        } catch (err: any) {
-          console.warn("Groq generation failed, falling back to other providers:", err.message);
-        }
-      }
-
-      // 1c. If user requested OpenRouter directly
-      const isOpenRouterRequested = requestedModel.toLowerCase().includes("openrouter");
-      const openRouterKey = getOpenRouterApiKey();
-      if (!text && isOpenRouterRequested && openRouterKey) {
-        try {
-          const orResponse = await generateOpenRouterContentWithFallback({
-            messages: claudeMessages,
-            systemInstruction,
-            maxTokens: 4096,
-          });
-          text = orResponse.text || "";
-          actualModelUsed = orResponse.usedModel || "OpenRouter";
-        } catch (err: any) {
-          console.warn("OpenRouter generation failed, falling back to other providers:", err.message);
-        }
-      }
-
-      // 2. OpenAI GPT-4o integration (if OPENAI_API_KEY configured)
-      const openaiKey = getOpenAIApiKey();
-      if (!text && openaiKey) {
-        try {
-          const openaiResponse = await generateOpenAIContentWithFallback({
-            messages: claudeMessages,
-            systemInstruction,
-            maxTokens: 4096,
-          });
-          text = openaiResponse.text || "";
-          actualModelUsed = openaiResponse.usedModel || "OpenAI GPT-4o";
-        } catch (err: any) {
-          console.warn("OpenAI generation failed, falling back to Gemini:", err.message);
-        }
-      }
-
-      // 3. Primary: Google Gemini with user-preferred model
+      // 1. Primary: Google Gemini with user-preferred model (Google AI Studio Native Model)
       if (!text && ai) {
         try {
           const response = await generateGeminiContentWithFallback({
@@ -2127,11 +2073,28 @@ Baris 2+: Kalimat pengantar singkat, lalu blok kode HTML lengkap dalam markdown 
           actualModelUsed = response.usedModel || preferredGeminiModel;
         } catch (err: any) {
           lastError = err;
-          console.warn("Gemini generation attempt failed, falling back...", err.message);
+          console.warn("Gemini generation attempt failed, checking fallback providers...", err.message);
         }
       }
 
-      // 4. Groq Ultra-Fast LPU inference (Active Key)
+      // 2. Secondary fallback: Anthropic Claude (if ANTHROPIC_API_KEY is configured)
+      const isClaudeRequested = requestedModel.toLowerCase().includes("claude");
+      if (!text && claudeKey) {
+        try {
+          const claudeResponse = await generateClaudeContentWithFallback({
+            messages: claudeMessages,
+            systemInstruction,
+            maxTokens: 4096,
+          });
+          text = claudeResponse.text || "";
+          actualModelUsed = claudeResponse.usedModel || (isClaudeRequested ? requestedModel : "Anthropic Claude");
+        } catch (err: any) {
+          // silently continue to next fallback
+        }
+      }
+
+      // 3. Tertiary fallback: Groq Ultra-Fast LPU (if GROQ_API_KEY is configured)
+      const groqKey = getGroqApiKey();
       if (!text && groqKey) {
         try {
           const groqResponse = await generateGroqContentWithFallback({
@@ -2142,11 +2105,28 @@ Baris 2+: Kalimat pengantar singkat, lalu blok kode HTML lengkap dalam markdown 
           text = groqResponse.text || "";
           actualModelUsed = groqResponse.usedModel || "Groq";
         } catch (err: any) {
-          console.warn("Groq generation failed, falling back to other providers:", err.message);
+          // silently continue to next fallback
         }
       }
 
-      // 5. OpenRouter Multi-Model inference (Active Key)
+      // 4. Quaternary fallback: OpenAI GPT-4o (if valid OPENAI_API_KEY is configured)
+      const openaiKey = getOpenAIApiKey();
+      if (!text && openaiKey) {
+        try {
+          const openaiResponse = await generateOpenAIContentWithFallback({
+            messages: claudeMessages,
+            systemInstruction,
+            maxTokens: 4096,
+          });
+          text = openaiResponse.text || "";
+          actualModelUsed = openaiResponse.usedModel || "OpenAI GPT-4o";
+        } catch (err: any) {
+          // silently continue to next fallback
+        }
+      }
+
+      // 5. OpenRouter Multi-Model inference (if OPENROUTER_API_KEY is configured)
+      const openRouterKey = getOpenRouterApiKey();
       if (!text && openRouterKey) {
         try {
           const orResponse = await generateOpenRouterContentWithFallback({
@@ -2157,11 +2137,11 @@ Baris 2+: Kalimat pengantar singkat, lalu blok kode HTML lengkap dalam markdown 
           text = orResponse.text || "";
           actualModelUsed = orResponse.usedModel || "OpenRouter";
         } catch (err: any) {
-          console.warn("OpenRouter generation failed, falling back to other providers:", err.message);
+          // silently continue to next fallback
         }
       }
 
-      // 3. Secondary fallback: Cloudflare AI
+      // 6. Cloudflare Workers AI fallback
       if (!text && getCloudflareTokens().length > 0) {
         try {
           const cfResponse = await generateCloudflareAIContentWithFallback({
@@ -2172,23 +2152,7 @@ Baris 2+: Kalimat pengantar singkat, lalu blok kode HTML lengkap dalam markdown 
           text = cfResponse.text || "";
           actualModelUsed = "Cloudflare Workers AI";
         } catch (err: any) {
-          console.warn("Cloudflare AI generation failed:", err.message);
-        }
-      }
-
-      // 4. Tertiary fallback: Anthropic Claude (if not tried yet and key available)
-      if (!text && claudeKey && !isClaudeRequested) {
-        try {
-          const claudeResponse = await generateClaudeContentWithFallback({
-            messages: claudeMessages,
-            systemInstruction,
-            maxTokens: 4096,
-          });
-          text = claudeResponse.text || "";
-          actualModelUsed = claudeResponse.usedModel || "Anthropic Claude";
-        } catch (err: any) {
-          console.error("Claude generation failed:", err.message);
-          if (!lastError) lastError = err;
+          // silently continue
         }
       }
 
